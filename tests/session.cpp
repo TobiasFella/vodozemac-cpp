@@ -1,4 +1,4 @@
-#include "../../target/cxxbridge/vodozemac/src/lib.rs.h"
+#include "../target/cxxbridge/vodozemac/src/lib.rs.h"
 #include "gtest/gtest.h"
 
 using namespace rust;
