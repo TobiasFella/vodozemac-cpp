@@ -1,9 +1,0 @@
-{
-  "devDependencies": {
-    "jest": "^27.5.1"
-  },
-  "scripts": {
-    "pretest": "wasm-pack build --target nodejs",
-    "test": "jest"
-  }
-}
