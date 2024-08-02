@@ -1,3 +1,5 @@
+use vodozemac::olm::SessionConfig;
+
 use super::{
     ffi::{InboundCreationResult, OlmMessageParts, OneTimeKey},
     Curve25519PublicKey, Ed25519PublicKey, Ed25519Signature, Session,
@@ -42,7 +44,7 @@ impl From<vodozemac::olm::InboundCreationResult> for InboundCreationResult {
     fn from(v: vodozemac::olm::InboundCreationResult) -> Self {
         Self {
             session: Session(v.session).into(),
-            plaintext: v.plaintext,
+            plaintext: std::str::from_utf8(&v.plaintext).unwrap().to_string(),
         }
     }
 }
@@ -61,7 +63,7 @@ impl Account {
     }
 
     pub fn generate_one_time_keys(&mut self, count: usize) {
-        self.0.generate_one_time_keys(count)
+        self.0.generate_one_time_keys(count);
     }
 
     pub fn one_time_keys(&self) -> Vec<OneTimeKey> {
@@ -76,7 +78,7 @@ impl Account {
     }
 
     pub fn generate_fallback_key(&mut self) {
-        self.0.generate_fallback_key()
+        self.0.generate_fallback_key();
     }
 
     pub fn fallback_key(&self) -> Vec<OneTimeKey> {
@@ -105,7 +107,7 @@ impl Account {
     ) -> Result<Box<Session>, vodozemac::KeyError> {
         let session = self
             .0
-            .create_outbound_session(identity_key.0, one_time_key.0);
+            .create_outbound_session(SessionConfig::version_1(), identity_key.0, one_time_key.0);
 
         Ok(Box::new(Session(session)))
     }

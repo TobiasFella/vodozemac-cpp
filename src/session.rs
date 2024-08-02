@@ -16,7 +16,7 @@ impl Session {
     }
 
     pub fn decrypt(&mut self, message: &OlmMessage) -> Result<String, anyhow::Error> {
-        Ok(self.0.decrypt(&message.0)?)
+        Ok(std::str::from_utf8(&self.0.decrypt(&message.0)?)?.to_string())
     }
 
     pub fn session_keys(&self) -> SessionKeys {

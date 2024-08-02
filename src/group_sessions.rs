@@ -1,5 +1,6 @@
 use super::ffi::DecryptedMessage;
 use anyhow::{anyhow, Result};
+use vodozemac::megolm::SessionConfig;
 
 pub struct GroupSession(vodozemac::megolm::GroupSession);
 
@@ -45,7 +46,7 @@ impl ExportedSessionKey {
 
 impl GroupSession {
     fn new() -> Self {
-        Self(vodozemac::megolm::GroupSession::new())
+        Self(vodozemac::megolm::GroupSession::new(SessionConfig::version_1()))
     }
 
     pub fn session_id(&self) -> String {
@@ -94,12 +95,13 @@ pub fn inbound_group_session_from_pickle(
 
 impl InboundGroupSession {
     fn new(session_key: &SessionKey) -> Self {
-        Self(vodozemac::megolm::InboundGroupSession::new(&session_key.0))
+        Self(vodozemac::megolm::InboundGroupSession::new(&session_key.0, SessionConfig::version_1()))
     }
 
     fn import(session_key: &ExportedSessionKey) -> Self {
         Self(vodozemac::megolm::InboundGroupSession::import(
             &session_key.0,
+            SessionConfig::version_1()
         ))
     }
 
@@ -123,7 +125,7 @@ impl InboundGroupSession {
         let ret = self.0.decrypt(&message.0)?;
 
         Ok(DecryptedMessage {
-            plaintext: ret.plaintext,
+            plaintext: std::str::from_utf8(&ret.plaintext)?.to_string(),
             message_index: ret.message_index,
         })
     }
