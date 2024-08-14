@@ -16,6 +16,10 @@ impl OlmMessage {
             message_type,
         }
     }
+
+    pub fn message_type(&self) -> u8 {
+        self.0.message_type() as u8
+    }
 }
 
 pub fn olm_message_from_parts(parts: &OlmMessageParts) -> Result<Box<OlmMessage>, anyhow::Error> {
@@ -39,6 +43,11 @@ pub fn account_from_pickle(
     let pickle = vodozemac::olm::AccountPickle::from_encrypted(pickle, pickle_key)?;
     Ok(Account(vodozemac::olm::Account::from_pickle(pickle)).into())
 }
+
+pub fn account_from_olm_pickle(pickle: &str, pickle_key: &[u8; 32]) -> Result<Box<Account>, anyhow::Error> {
+    Ok(Box::new(Account(vodozemac::olm::Account::from_libolm_pickle(pickle, pickle_key)?)))
+}
+
 
 impl From<vodozemac::olm::InboundCreationResult> for InboundCreationResult {
     fn from(v: vodozemac::olm::InboundCreationResult) -> Self {
