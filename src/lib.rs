@@ -91,7 +91,7 @@ mod ffi {
         fn mark_keys_as_published(self: &mut Account);
         fn max_number_of_one_time_keys(self: &Account) -> usize;
         fn account_from_pickle(pickle: &str, pickle_key: &[u8; 32]) -> Result<Box<Account>>;
-        fn account_from_olm_pickle(pickle: &str, pickle_key: &[u8; 32]) -> Result<Box<Account>>;
+        fn account_from_olm_pickle(pickle: &str, pickle_key: &[u8; 128]) -> Result<Box<Account>>;
         fn pickle(self: &Account, pickle_key: &[u8; 32]) -> String;
         fn create_outbound_session(
             self: &Account,
@@ -112,7 +112,7 @@ mod ffi {
         fn encrypt(self: &mut Session, plaintext: &str) -> Box<OlmMessage>;
         fn decrypt(self: &mut Session, message: &OlmMessage) -> Box<SessionDecryptResult>;
         fn session_from_pickle(pickle: &str, pickle_key: &[u8; 32]) -> Result<Box<Session>>;
-        fn session_from_olm_pickle(pickle: &str, pickle_key: &[u8; 32]) -> Result<Box<Session>>;
+        fn session_from_olm_pickle(pickle: &str, pickle_key: &[u8; 128]) -> Result<Box<Session>>;
         fn pickle(self: &Session, pickle_key: &[u8; 32]) -> String;
         fn session_decrypt_result_value(result: Box<SessionDecryptResult>) -> String;
         fn has_error(self: &SessionDecryptResult) -> bool;
@@ -154,7 +154,7 @@ mod ffi {
             pickle: &str,
             pickle_key: &[u8; 32],
         ) -> Result<Box<GroupSession>>;
-        fn group_session_from_olm_pickle(pickle: &str, pickle_key: &[u8; 32]) -> Result<Box<GroupSession>>;
+        fn group_session_from_olm_pickle(pickle: &str, pickle_key: &[u8; 128]) -> Result<Box<GroupSession>>;
 
         type InboundGroupSession;
         fn new_inbound_group_session(session_key: &SessionKey) -> Box<InboundGroupSession>;
@@ -176,7 +176,7 @@ mod ffi {
             pickle: &str,
             pickle_key: &[u8; 32],
         ) -> Result<Box<InboundGroupSession>>;
-        fn inbound_group_session_from_olm_pickle(pickle: &str, pickle_key: &[u8; 32]) -> Result<Box<InboundGroupSession>>;
+        fn inbound_group_session_from_olm_pickle(pickle: &str, pickle_key: &[u8; 128]) -> Result<Box<InboundGroupSession>>;
     }
 
     #[namespace = "sas"]
