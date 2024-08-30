@@ -195,6 +195,7 @@ mod ffi {
         type EstablishedSas;
         fn bytes(self: &EstablishedSas, info: &str) -> Box<SasBytes>;
         fn calculate_mac(self: &EstablishedSas, input: &str, info: &str) -> Box<Mac>;
+        fn calculate_mac_invalid_base64(self: &EstablishedSas, input: &str, info: &str) -> String;
         fn verify_mac(self: &EstablishedSas, input: &str, info: &str, mac: &Mac) -> Result<()>;
 
         type SasBytes;
