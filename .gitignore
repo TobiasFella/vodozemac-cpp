@@ -10,3 +10,5 @@ cpp/session-test
 cpp/sas-test
 cpp/group-session-test
 .ccls-cache
+.kateproject.build
+compile_commands.json
