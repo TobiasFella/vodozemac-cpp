@@ -4,6 +4,9 @@ project(Vodozemac-cpp)
 
 find_package(Corrosion REQUIRED)
 
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 corrosion_import_crate(
     MANIFEST_PATH Cargo.toml
 )
