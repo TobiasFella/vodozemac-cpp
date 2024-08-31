@@ -42,7 +42,7 @@ set_target_properties(vodozemac-cpp PROPERTIES
         SOVERSION ${VODOZEMAC_SOVERSION}
 )
 
-# We need to copy this file manually, as it's a symlink and CMake will errenously try to install it as such
+# We need to copy this file manually, as it's a symlink and CMake will erroneously try to install it as such
 add_custom_target(copy_header ALL DEPENDS cargo-build_vodozemac BYPRODUCTS ${CMAKE_BINARY_DIR}/vodozemac.h VERBATIM COMMAND
         cp -L ${CMAKE_BINARY_DIR}/cargo/build/${Rust_CARGO_TARGET}/cxxbridge/vodozemac/src/lib.rs.h ${CMAKE_BINARY_DIR}/vodozemac.h
 )
