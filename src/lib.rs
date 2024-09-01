@@ -116,6 +116,7 @@ mod ffi {
         fn pickle(self: &Session, pickle_key: &[u8; 32]) -> String;
         fn session_decrypt_result_value(result: Box<SessionDecryptResult>) -> String;
         fn has_error(self: &SessionDecryptResult) -> bool;
+        fn error_code(self: &SessionDecryptResult) -> u8;
 
         type OlmMessage;
         fn to_parts(self: &OlmMessage) -> OlmMessageParts;
