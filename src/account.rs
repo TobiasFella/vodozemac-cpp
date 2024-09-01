@@ -44,7 +44,7 @@ pub fn account_from_pickle(
     Ok(Account(vodozemac::olm::Account::from_pickle(pickle)).into())
 }
 
-pub fn account_from_olm_pickle(pickle: &str, pickle_key: &[u8; 128]) -> Result<Box<Account>, anyhow::Error> {
+pub fn account_from_olm_pickle(pickle: &str, pickle_key: &[u8]) -> Result<Box<Account>, anyhow::Error> {
     Ok(Box::new(Account(vodozemac::olm::Account::from_libolm_pickle(pickle, pickle_key)?)))
 }
 

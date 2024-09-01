@@ -77,7 +77,7 @@ pub fn group_session_from_pickle(pickle: &str, pickle_key: &[u8; 32]) -> Result<
 
 pub fn group_session_from_olm_pickle(
     pickle: &str,
-    pickle_key: &[u8; 128],
+    pickle_key: &[u8],
 ) -> Result<Box<GroupSession>> {
     Ok(Box::new(GroupSession(vodozemac::megolm::GroupSession::from_libolm_pickle(pickle, pickle_key)?)))
 }
@@ -103,7 +103,7 @@ pub fn inbound_group_session_from_pickle(
 
 pub fn inbound_group_session_from_olm_pickle(
     pickle: &str,
-    pickle_key: &[u8; 128],
+    pickle_key: &[u8],
 ) -> Result<Box<InboundGroupSession>> {
     Ok(Box::new(InboundGroupSession(vodozemac::megolm::InboundGroupSession::from_libolm_pickle(pickle, pickle_key)?)))
 }
