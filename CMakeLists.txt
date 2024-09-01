@@ -38,6 +38,10 @@ add_library(vodozemac-cpp SHARED)
 target_sources(vodozemac-cpp PRIVATE src/dummy.cpp)
 # We need to link to the whole archive, otherwise important symbols are thrown away
 target_link_libraries(vodozemac-cpp PRIVATE "$<LINK_LIBRARY:WHOLE_ARCHIVE,vodozemac-static>")
+
+if(WIN32)
+        target_link_libraries(vodozemac-cpp PRIVATE Bcrypt.lib)
+endif()
 target_include_directories(vodozemac-cpp INTERFACE "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/VodozemacCpp>")
 
 set_target_properties(vodozemac-cpp PROPERTIES
