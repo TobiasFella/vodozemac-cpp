@@ -50,9 +50,13 @@ set_target_properties(vodozemac-cpp PROPERTIES
 )
 
 # We need to copy this file manually, as it's a symlink and CMake will erroneously try to install it as such
-add_custom_target(copy_header ALL DEPENDS cargo-build_vodozemac BYPRODUCTS ${CMAKE_BINARY_DIR}/vodozemac.h VERBATIM COMMAND
-        cp -L ${CMAKE_BINARY_DIR}/cargo/build/${Rust_CARGO_TARGET}/cxxbridge/vodozemac/src/lib.rs.h ${CMAKE_BINARY_DIR}/vodozemac.h
-)
+if(WIN32)
+        add_custom_target(copy_header ALL DEPENDS cargo-build_vodozemac BYPRODUCTS ${CMAKE_BINARY_DIR}/vodozemac.h VERBATIM COMMAND
+        ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/cargo/build/${Rust_CARGO_TARGET}/cxxbridge/vodozemac/src/lib.rs.h ${CMAKE_BINARY_DIR}/vodozemac.h)
+else()
+        add_custom_target(copy_header ALL DEPENDS cargo-build_vodozemac BYPRODUCTS ${CMAKE_BINARY_DIR}/vodozemac.h VERBATIM COMMAND
+        cp -L ${CMAKE_BINARY_DIR}/cargo/build/${Rust_CARGO_TARGET}/cxxbridge/vodozemac/src/lib.rs.h ${CMAKE_BINARY_DIR}/vodozemac.h)
+endif()
 
 install(TARGETS vodozemac-cpp EXPORT VodozemacTargets ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 
