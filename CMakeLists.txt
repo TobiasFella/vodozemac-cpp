@@ -60,6 +60,7 @@ set_target_properties(vodozemac-cpp PROPERTIES
 if(WIN32)
         add_custom_target(copy_header ALL DEPENDS cargo-build_vodozemac BYPRODUCTS ${CMAKE_BINARY_DIR}/vodozemac.h VERBATIM COMMAND
         ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/${BUILD_FOLDER_PREFIX}cargo/build/${Rust_CARGO_TARGET}/cxxbridge/vodozemac/src/lib.rs.h ${CMAKE_BINARY_DIR}/vodozemac.h)
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:MSVCRT")
 else()
         add_custom_target(copy_header ALL DEPENDS cargo-build_vodozemac BYPRODUCTS ${CMAKE_BINARY_DIR}/vodozemac.h VERBATIM COMMAND
         cp -L ${CMAKE_BINARY_DIR}/cargo/build/${Rust_CARGO_TARGET}/cxxbridge/vodozemac/src/lib.rs.h ${CMAKE_BINARY_DIR}/vodozemac.h)
