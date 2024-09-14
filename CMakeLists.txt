@@ -5,6 +5,13 @@ project(vodozemac-cpp VERSION 1.0.0 LANGUAGES CXX)
 set(ECM_MODULE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 list(APPEND CMAKE_MODULE_PATH ${ECM_MODULE_DIR})
 
+# Work around some weird CI problems; TODO: Figure out what's going on there
+option(CI_BUILD FALSE)
+
+if (${CI_BUILD})
+        set(BUILD_FOLDER_PREFIX "x64/Debug/")
+endif()
+
 include(ECMSetupVersion)
 ecm_setup_version(PROJECT
         VARIABLE_PREFIX VODOZEMAC
@@ -52,7 +59,7 @@ set_target_properties(vodozemac-cpp PROPERTIES
 # We need to copy this file manually, as it's a symlink and CMake will erroneously try to install it as such
 if(WIN32)
         add_custom_target(copy_header ALL DEPENDS cargo-build_vodozemac BYPRODUCTS ${CMAKE_BINARY_DIR}/vodozemac.h VERBATIM COMMAND
-        ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/cargo/build/${Rust_CARGO_TARGET}/cxxbridge/vodozemac/src/lib.rs.h ${CMAKE_BINARY_DIR}/vodozemac.h)
+        ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/${BUILD_FOLDER_PREFIX}cargo/build/${Rust_CARGO_TARGET}/cxxbridge/vodozemac/src/lib.rs.h ${CMAKE_BINARY_DIR}/vodozemac.h)
 else()
         add_custom_target(copy_header ALL DEPENDS cargo-build_vodozemac BYPRODUCTS ${CMAKE_BINARY_DIR}/vodozemac.h VERBATIM COMMAND
         cp -L ${CMAKE_BINARY_DIR}/cargo/build/${Rust_CARGO_TARGET}/cxxbridge/vodozemac/src/lib.rs.h ${CMAKE_BINARY_DIR}/vodozemac.h)
